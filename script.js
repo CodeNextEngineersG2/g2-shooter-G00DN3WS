@@ -1,5 +1,7 @@
 // UI Variables
 var canvas;
+var canvasWidth;
+var canvasHeight;
 var gameScreen;
 var scoreDisplay;
 
@@ -33,13 +35,29 @@ var alienBulletX;
 var alienBulletY;
 
 
-/*
- * setup()
- * This function is called once. Sets up the canvas, accesses HTML elements with
- * select(), and adds event listeners to those elements. Sets initial values of
- * variables by calling resetGame().
- */
 
+function setup(){
+
+	console.log ('setup');
+	canvasWidth = 500;
+	canvasHeight = 500;
+	canvas = createCanvas(canvasWidth, canvasHeight);
+	background(0);
+	gameScreen = select('#game-screen');
+	canvas.parent(gameScreen);
+	
+	shipX = 250;
+	shipY = 450;
+	shipDiameter = 100;
+	
+ }
+
+function drawShip() {
+
+	ellipse(shipX,shipY,shipDiameter,shipDiameter);
+	shipColor (255);
+
+}
 
 /*
  * gameOver()
@@ -60,13 +78,6 @@ var alienBulletY;
  * draw()
  * This function animates the ship, alien, and both kinds of bullets, but only
  * if the game is running.
- */
-
-
-/*
- * drawShip()
- * This function draws the player's ship. It also controls the ship's
- * x value by checking if the player is holding down the left or right keys.
  */
 
 
