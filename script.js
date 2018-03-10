@@ -42,22 +42,115 @@ function setup(){
 	canvasWidth = 500;
 	canvasHeight = 500;
 	canvas = createCanvas(canvasWidth, canvasHeight);
-	background(0);
 	gameScreen = select('#game-screen');
 	canvas.parent(gameScreen);
 	
 	shipX = 250;
 	shipY = 450;
 	shipDiameter = 100;
+	shipSpeed = 20;
+	bulletDiameter = 20;
+	shipShooting = false;
+	alienDiameter = 100;
+	alienVelocity = 10;
+	alienX = 50;
+	alienY = 50;
 	
+ }
+
+ function draw() {
+
+ 	background(0);
+ 	drawShip();
+ 	drawAlien();
+
+ 	if(shipShooting == true){
+
+ 		drawBullet();
+
+ 	}
+
+
  }
 
 function drawShip() {
 
+	fill(202,165,247);
 	ellipse(shipX,shipY,shipDiameter,shipDiameter);
-	shipColor (255);
+
+	if (keyIsDown(LEFT_ARROW) && shipX > shipDiameter/2) {
+
+		shipX -= shipSpeed;
+
+	}
+
+	else if (keyIsDown(RIGHT_ARROW) && shipX < canvasWidth-shipDiameter/2) {
+
+		shipX += shipSpeed;
+
+	}
 
 }
+
+ function drawBullet(){
+
+ 	fill(255,250,0);
+ 	ellipse(bulletX,bulletY,bulletDiameter,bulletDiameter);
+ 	//snip
+ 	bulletY -= 10;
+
+ 	if (bulletY < 0) {
+
+ 		drawBullet();
+
+ 	}
+
+ 	else if(bulletY == 0){
+
+ 		shipShooting = false;
+
+ 	}
+
+ }
+
+function keyPressed() {
+
+	if (keyCode === 32 && shipShooting == false){
+
+		bulletX = shipX;
+
+		bulletY = shipY;
+
+		shipShooting = true;
+
+	}
+
+}
+
+
+function drawAlien(){
+
+	fill(135,255,195);
+	ellipse(alienX,alienY,alienDiameter, alienDiameter);
+
+	alienX += alienVelocity;
+
+	if(alienX >= canvasWidth && alienX > alienDiameter/2){
+
+		alienX -= alienVelocity;
+		alienVelocity = -10;
+
+	}
+
+
+	else if(alienX <= alienDiameter/2){
+
+		alienVelocity = 10;
+		
+	}
+
+}
+
 
 /*
  * gameOver()
@@ -78,32 +171,6 @@ function drawShip() {
  * draw()
  * This function animates the ship, alien, and both kinds of bullets, but only
  * if the game is running.
- */
-
-
-/*
- * keyPressed()
- * This function runs automatically when the player presses the spacebar
- * (keyCode === 32). If they do, and a bullet is not currently being fired
- * ("shipShooting" variable is false), it positions the bullet relative to the
- * ship. Then it sets the "shipShooting" variable to "true", indicating a ship
- * bullet is currently being fired.
- */
-
-
-/*
- * drawBullet()
- * This function draws a bullet. It also checks to see if the bullet has hit
- * the alien. If it has, the alien is reset to the top-left of the screen
- * and the player earns a point. The alien aslo becomes faster (i.e., harder
- * to hit) each time it is hit by a bullet.
- */
-
-
-/*
- * drawAlien()
- * This function draws an alien. It also checks to see if the alien has touched
- * the player's ship. If it has, the function calls gameOver().
  */
 
 
