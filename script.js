@@ -44,7 +44,7 @@ function setup(){
 	gameScreen = select('#game-screen');
 	canvas.parent(gameScreen);
 	scoreDisplay = select("#score-display");
-	
+	score = 0;
 	scoreDisplay.html(score);
 	resetGame();
  }
@@ -67,7 +67,7 @@ function setup(){
 
  		drawAlienBullet();
 
- 	}
+ 		}
 
  	}
 
@@ -118,17 +118,16 @@ function drawShip() {
  		resetAlien();
  		alienVelocity++;
  		shipShooting = false;
+ 		score++;
+		scoreDisplay.html(score);
 
- 	}
-
- 	score++;
- 	scoreDisplay = score;
+ 		}
 
  	}
 
 function keyPressed() {
 
-	if (keyCode === 32 && !shipShooting && !gameRunning ){
+	if (keyCode === 32 && !shipShooting && gameRunning) {
 
 		bulletX = shipX;
 
@@ -227,7 +226,7 @@ function drawAlienBullet(){
 function gameOver(){
 
 	gameRunning = false;
-	alert("GAME OVER. Your score is" score);
+	alert("GAME OVER");
 	resetGame();
 
 }
